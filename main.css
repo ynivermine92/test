@@ -1,0 +1,548 @@
+body {
+  background: #fafafa;
+  color: #333333;
+  margin-top: 5rem;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #444444;
+  
+}
+
+.bg-steel {
+  background: linear-gradient(to bottom, #8dc7f0, #256caa);
+
+}
+
+.site-header .navbar-nav .nav-link {
+  color: #ffffff;
+}
+
+.site-header .navbar-nav .nav-link:hover {
+  color: #cecece;
+}
+
+.no-wrap {
+  white-space: nowrap;
+}
+
+.site-header .navbar-nav .nav-link {
+  position: relative;
+  border: none;
+  overflow: hidden;
+  transition: color 0.3s ease;
+}
+
+.site-header .navbar-nav .nav-link:hover {
+  color: #cecece;
+}
+
+.site-header .navbar-nav .nav-link::after {
+  content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      height: 1px;
+      background-color: #cecece;
+      transition: width 0.4s ease, left 0.4s ease;
+}
+
+.site-header .navbar-nav .nav-link::before {
+  content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 0;
+      height: 1px;
+      background-color: #cecece;
+      transition: width 0.4s ease, left 0.4s ease;
+}
+
+.site-header .navbar-nav .nav-link:hover::after, .site-header .navbar-nav .nav-link:hover::before {
+  width: 100%;
+  left: 0;
+}
+
+.site-header .navbar-nav .nav-link.active {
+  position: relative;
+  border: none;
+  color: #cecece;
+}
+
+.site-header .navbar-nav .nav-link.active::after, .site-header .navbar-nav .nav-link.active::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 70%;
+  background: rgb(255, 255, 255, 0.2); 
+  
+  border-radius: 5px;
+  transform: translate(-50%, -50%); 
+  pointer-events: none; 
+}
+
+
+.navbar-brand {
+  margin-bottom: 3px;
+}
+
+.dropdown-menu {
+  background: linear-gradient(to top,  #8dc7f0, #256caa);
+  border: none;
+  margin-top: 0rem;
+  opacity: 1 !important;
+  border-radius: 5px;
+
+
+}
+
+.dropdown-menu .nav-link {
+  color: #cbd5db;
+}
+
+.dropdown-menu .nav-link:hover {
+  color: #ffffff;
+
+}
+
+.content-section {
+  background: #ffffff;
+  padding: 10px 20px;
+  border: 1px solid #dddddd;
+  border-radius: 3px;
+  margin-bottom: 20px;
+}
+
+.article-title {
+  color: #444444;
+}
+
+a.article-title:hover {
+  color: #428bca;
+  text-decoration: none;
+}
+
+.article-content {
+  white-space: pre-line;
+}
+
+.article-img {
+  height: 65px;
+  width: 65px;
+  margin-right: 16px;
+}
+
+.article-metadata {
+  padding-bottom: 1px;
+  margin-bottom: 4px;
+  border-bottom: 1px solid #e3e3e3
+}
+
+.article-metadata a:hover {
+  color: #333;
+  text-decoration: none;
+}
+
+.article-svg {
+  width: 25px;
+  height: 25px;
+  vertical-align: middle;
+}
+
+.account-img {
+  height: 125px;
+  width: 125px;
+  margin-right: 20px;
+  margin-bottom: 16px;
+}
+
+.account-heading {
+  font-size: 2.5rem;
+}
+
+.dropdown:hover > .dropdown-menu {
+    display: block;
+    background-color: #256caa;
+} 
+
+/* Стиль для номера телефону з іконкою */
+#callToast , .call__item {
+  position: fixed;
+  height: 100px;
+  bottom: 20px;
+  right:30px;
+  width: 300px;
+  background-color: #256caa;
+  color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+/*   opacity: 0; */
+ /*  visibility: hidden; */
+  transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+}
+
+.call__item + .call__item {
+  animation: moveBottom 7s forwards;
+
+}
+
+@keyframes moveBottom {
+  0% {
+    bottom: 0;
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    bottom: 150px;
+    opacity: 0.3;
+  }
+}
+
+
+
+
+/* Коли вікно видиме */
+#callToast.show, .call__item.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Контейнер для номера телефону та іконки */
+#callContent {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+/* Іконка телефону, займає всю висоту */
+#callIcon , .callIcon{
+  flex-shrink: 0;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 20px;
+  animation: rotatePhone 0.7s ease-in-out infinite;
+}
+
+#callIcon i  , .callIcon i{
+  font-size: 50px;
+  color: white;
+}
+
+/* Контейнер для номера телефону та статусу */
+#callInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Номер телефону */
+#callNumberText, .callNumberText {
+  font-size: 18px;
+}
+
+/* Статус дзвінка */
+#callStatus {
+  font-size: 14px;
+  color: #d3d3d3;
+  margin-top: 5px;
+}
+
+@keyframes rotatePhone {
+  0% {
+      transform: rotate(0deg);
+  }
+  10% {
+      transform: rotate(15deg);
+  }
+  20% {
+      transform: rotate(0deg);
+  }
+  30% {
+      transform: rotate(-15deg);
+  }
+  40% {
+      transform: rotate(0deg);
+  }
+  50% {
+      transform: rotate(15deg);
+  }
+  60% {
+      transform: rotate(0deg);
+  }
+  70% {
+      transform: rotate(-15deg);
+  }
+  80% {
+      transform: rotate(0deg);
+  }
+  90% {
+      transform: rotate(15deg);
+  }
+  100% {
+      transform: rotate(0deg);
+  }
+}
+
+.truncate {
+  max-width: 150px; /* Можна налаштувати за необхідністю */
+  white-space: nowrap; /* Забороняє перенесення рядків */
+  overflow: hidden; /* Ховає текст, що виходить за межі */
+  text-overflow: ellipsis; /* Додає три крапки, якщо текст занадто довгий */
+}
+
+.table-stal {
+  width: 100%; /* Повна ширина */
+  table-layout: fixed; /* Стабільна розмітка колонок */
+}
+
+/* --------------------Стилі для сторінки show_company------------------- */
+.left-section {
+  background-color: #f8f9fa;
+  padding: 20px;
+  height: 100%;
+  border-right: 1px solid #dee2e6;
+}
+
+.right-section {
+  padding: 20px;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.btn-custom {
+  background-color: #007bff;
+  color: white;
+}
+
+.tab-content {
+  padding-top: 20px;
+}
+
+/* Підгонка висоти контейнерів під екран */
+.full-height {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.scrollable-section {
+  overflow-y: auto;
+  flex-grow: 1;
+}
+
+.card {
+  border-radius: 10px;
+  /* Закруглені краї */
+  overflow: hidden;
+  /* Щоб тінь не виходила за краї */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  /* Додаємо глибину тіні */
+}
+
+.icon-top {
+  margin-bottom: 6px;
+
+}
+
+/* Стиль для заголовка */
+.card-head {
+  background: linear-gradient(to top, #8dc7f0, #256caa);
+  color: #fff;
+  /* Білий текст */
+  padding: 15px;
+  height: 64px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.text-head {
+  font-size: 24px;
+}
+
+/* Контейнер для інформації */
+.info-container {
+  background-color: #eef8ff;
+  /* Світлий фон */
+  border-radius: 8px;
+  /* Округлі краї */
+  padding: 10px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  /* Легка тінь */
+  display: flex;
+  flex-direction: column;
+}
+
+
+
+/* Стиль для кнопок в заголовку */
+.btn-outline-light {
+  color: #fff;
+  border-color: #fff;
+}
+
+/* Стиль для кнопок "Add" */
+.btn-outline-secondary {
+  margin-left: 10px;
+}
+
+.green-link {
+  color: green !important; /* Зміна кольору на зелений */
+}
+
+.phone-item {
+    display: flex;
+    justify-content: flex-start; /* Ліва сторона домінує */
+    align-items: center; /* Вертикальне вирівнювання по центру */
+}
+
+.phone-item .green-link {
+    margin-right: 15%; /* Відступ для 'call' кнопки праворуч */
+}
+
+.small-close-icon {
+  font-size: 20px !important;
+  padding-top: 6px;
+}
+
+.phone-row {
+  display: flex;
+  justify-content: space-between; /* Вирівнювання номера і кнопки дзвінка по краях */
+  align-items: center; /* Вертикальне вирівнювання по центру */
+}
+
+#number {
+  margin-left: 5%; /* Відступ зліва для номера телефону */
+}
+
+#callButton {
+  margin-right: 15%; /* Відступ справа для кнопки дзвінка */
+}
+
+.call-icons {
+  padding-top: 5px;
+}
+
+.right-section {
+  max-height: none;
+        overflow: visible;
+}
+
+.author-name {
+  font-size: 1.1em;
+  font-weight: bold;
+}
+
+.article-content {
+ font-size: 1em;
+    margin-top: 0.5rem;
+    overflow-wrap: break-word; /* Переносить довгі слова на новий рядок */
+    word-break: break-all; /* Додатковий варіант для розриву дуже довгих слів */
+    white-space: normal; /* Нормальний режим переносу тексту */
+}
+
+.text-data {
+  color: black;
+}
+
+.content-section {
+background-color: #f9f9f9;
+}
+
+.comment-item {
+  background-color: #f9f9f9; /* Легкий сірий фон для всього коментаря */
+  padding: 15px; /* Внутрішній відступ */
+  border-radius: 5px; /* Закруглення кутів */
+  margin-bottom: 10px; /* Відступ між коментарями */
+  border: 1px solid #ddd; /* Легкий сірий бордюр для виділення */
+}
+
+.comment-author {
+  border-bottom: 1px solid #ccc; /* Лінія, що відділяє автора від тексту */
+  padding-bottom: 5px; /* Відступ під автором */
+  font-weight: bold; /* Жирний текст для автора */
+}
+
+.comment-body {
+  margin-top: 10px; /* Відступ зверху після лінії */
+  color: #333; /* Темний текст для самого коментаря */
+}
+
+/* ////////////////////////////////////Стиль основного блоку дзвінка////////////////////////////////// */
+
+
+/* Стиль верхньої частини з датою та часом */
+.call-header {
+    font-size: 14px;
+    width: 100%;
+}
+
+.data-space {
+margin-left: 10px;
+}
+
+.line-content {
+  border-bottom: 1px solid #ccc; /* Лінія, що відділяє автора від тексту */
+  padding-bottom: 6px; /* Відступ під автором */
+  width: 40%;
+}
+
+/* Стиль типу дзвінка та його іконки */
+.call-type {
+    font-weight: bold;
+    font-size: 16px;
+    margin-top: -25px;
+    margin-left: 60px;
+}
+
+.call-icon {
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    z-index: 1;
+}
+
+.duration-data {
+  color: #1a73e8;
+  font-size: 14px;
+}
+
+/* Стиль для внутрішнього номера та ПІБ */
+.operator-info {
+    font-size: 16px;
+    color: #1a73e8;
+}
+
+.sip-number {
+    font-size: 16px;
+}
+
+.client-number {
+    font-size: 16px;
+    color: #1a73e8;
+}
+
+/* Стиль аудіоплеєра */
+.audio-player-container {
+    display: flex;
+    align-items: center;
+}
+
+hr.my-2 {
+  border: 0;
+  border-top: 1px solid #ccc; /* Колір та товщина лінії */
+  width: 70%;
+  margin-left: 0;
+}

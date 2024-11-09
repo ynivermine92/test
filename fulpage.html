@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" type="text/css" href="main.css" />
+    <link rel="stylesheet" type="text/css" href="bootstrap.min.css" />
+
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+
+    <title>Список клієнтів в црм</title>
+
+    <link rel="icon" type="image/x-icon" href="/static/image/favicon.ico" />
+  </head>
+  <body>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment-with-locales.min.js"
+      integrity="sha512-42PE0rd+wZ2hNXftlM78BSehIGzezNeQuzihiBCvUEB3CVxHvsShF86wBWwQORNxNINlBPuq7rG4WWhNiTVHFg=="
+      crossorigin="anonymous"
+    ></script>
+
+    <script>
+      moment.locale("en");
+      function flask_moment_render(elem) {
+        {
+          const timestamp = moment(elem.dataset.timestamp);
+          const func = elem.dataset.function;
+          const format = elem.dataset.format;
+          const timestamp2 = elem.dataset.timestamp2;
+          const no_suffix = elem.dataset.nosuffix;
+          const units = elem.dataset.units;
+          let args = [];
+          if (format) args.push(format);
+          if (timestamp2) args.push(moment(timestamp2));
+          if (no_suffix) args.push(no_suffix);
+          if (units) args.push(units);
+          elem.textContent = timestamp[func].apply(timestamp, args);
+          elem.classList.remove("flask-moment");
+          elem.style.display = "";
+        }
+      }
+      function flask_moment_render_all() {
+        {
+          const moments = document.querySelectorAll(".flask-moment");
+          moments.forEach(function (moment) {
+            {
+              flask_moment_render(moment);
+              const refresh = moment.dataset.refresh;
+              if (refresh && refresh > 0) {
+                {
+                  (function (elem, interval) {
+                    {
+                      setInterval(function () {
+                        {
+                          flask_moment_render(elem);
+                        }
+                      }, interval);
+                    }
+                  })(moment, refresh);
+                }
+              }
+            }
+          });
+        }
+      }
+      document.addEventListener("DOMContentLoaded", flask_moment_render_all);
+    </script>
+
+    <header class="site-header">
+      <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
+        <div class="container-fluid">
+          <a class="navbar-brand mr-4" href="/home">MCeasy</a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbarToggle"
+            aria-controls="navbarToggle"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarToggle">
+            <div class="navbar-nav mr-auto">
+              <a class="nav-item nav-link" href="/cabinet">Кабінет</a>
+
+              <a class="nav-item nav-link" href="/reports/consolidated"
+                >Звіти</a
+              >
+
+              <div class="dropdown">
+                <a class="nav-item nav-link">Налаштування астеріск</a>
+                <ul class="dropdown-menu">
+                  <li>
+                    <a class="nav-item nav-link" href="/ast_config/moh/classes"
+                      >Музика в очікувані</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      class="nav-item nav-link"
+                      href="/ast_config/blacklist/incoming"
+                      >Заблоковані номера вхід</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      class="nav-item nav-link"
+                      href="/ast_config/blacklist/outgoing"
+                      >Заблоковані номера вихід</a
+                    >
+                  </li>
+                  <li>
+                    <a class="nav-item nav-link" href="/ast_config/phonebook"
+                      >Телефонна книга</a
+                    >
+                  </li>
+                  <li>
+                    <a class="nav-item nav-link" href="/worktime"
+                      >Робочий час</a
+                    >
+                  </li>
+                </ul>
+              </div>
+
+              <div class="dropdown">
+                <a class="nav-item nav-link">Црм система</a>
+                <ul class="dropdown-menu">
+                  <li>
+                    <a
+                      class="nav-item nav-link active"
+                      href="/crm/contragent/list_all"
+                      >Контрагенти</a
+                    >
+                  </li>
+                  <li>
+                    <a class="nav-item nav-link" href="/crm/contact/list_all"
+                      >Перегляд контактів</a
+                    >
+                  </li>
+                  <li>
+                    <a class="nav-item nav-link" href="/crm/calls/list_all"
+                      >Історія дзвінків</a
+                    >
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Navbar Right Side -->
+            <div class="navbar-nav">
+              <a class="nav-item nav-link" href="/account">Профіль</a>
+
+              <div class="dropdown">
+                <a class="nav-item nav-link">Адміністрування</a>
+                <ul class="dropdown-menu">
+                  <li>
+                    <a class="nav-item nav-link" href="/users">Користувачі</a>
+                  </li>
+                  <li>
+                    <a class="nav-item nav-link" href="/register"
+                      >Реєстрація користувача</a
+                    >
+                  </li>
+                  <li><a class="nav-item nav-link" href="/groups">Групи</a></li>
+                </ul>
+              </div>
+
+              <a class="nav-item nav-link" href="/logout">Вийти</a>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <div class="container">
+      <main role="main">
+        <div class="row">
+          <div class="col-sm-12 col-md-12 col-xl-12">
+            <div class="container">
+              <h2 id="totalItems">Список компаній</h2>
+
+              <div
+                class="row d-flex justify-content-between align-items-center"
+              >
+                <div class="col-md-6">
+                  <nav aria-label="Page navigation">
+                    <ul class="pagination" id="paginationTop"></ul>
+                  </nav>
+                </div>
+                <div
+                  class="col-md-6 d-flex justify-content-end align-items-center mb-3"
+                >
+                  <a href="/crm/contragent/create" class="btn btn-primary mr-3"
+                    >Додати</a
+                  >
+                  <form class="form-inline">
+                    <input
+                      class="form-control"
+                      type="search"
+                      id="searchCompanies"
+                      placeholder="Пошук..."
+                      aria-label="Search"
+                    />
+                  </form>
+                </div>
+              </div>
+
+              <table
+                class="table table-striped table-bordered table-hover table-stal"
+              >
+                <thead>
+                  <tr
+                    class="text-center table-info"
+                    style="white-space: nowrap"
+                  >
+                    <th scope="col" style="width: 23%">Назва</th>
+                    <th scope="col" style="width: 23%">Адреса</th>
+                    <th scope="col" style="width: 15%">Телефон</th>
+                    <th scope="col" style="width: 15%">Email</th>
+                    <th scope="col" style="width: 7%">Дії</th>
+                  </tr>
+                </thead>
+                <tbody id="companiesTable"></tbody>
+              </table>
+
+              <div
+                class="row d-flex justify-content-between align-items-center"
+              >
+                <div class="col-md-6">
+                  <nav aria-label="Page navigation">
+                    <ul class="pagination" id="paginationBottom"></ul>
+                  </nav>
+                </div>
+              </div>
+            </div>
+
+            <!--             <div id="callToast">
+              <div id="callIcon">
+                <i class="material-icons">phone_in_talk</i>
+              </div>
+              <div id="callInfo">
+                <div id="callNumberText">...</div>
+                <div id="callMessage"></div>
+              </div>
+            </div> -->
+
+            <ul class="call">
+              <li class="call__item">
+                <div class="callIcon">
+                  <i class="material-icons">phone_in_talk</i>
+                </div>
+                <div id="callInfo">
+                  <div class="callNumberText">+38099355258</div>
+                  <div class="callMessage">Сообщение о звонке</div>
+                </div>
+                
+              </li>
+
+              <li class="call__item">
+                <div class="callIcon">
+                  <i class="material-icons">phone_in_talk</i>
+                </div>
+                <div id="callInfo">
+                  <div class="callNumberText">+38099355257</div>
+                  <div class="callMessage">Сообщение о звонке</div>
+                </div>
+              </li>
+
+            </ul>
+          </div>
+        </div>
+      </main>
+      <div class="text-center">
+        <!-- Main Footer -->
+        <footer class="main-footer">
+          <!-- To the right -->
+          <div class="float-right d-none d-sm-inline">
+            <!-- With best regards zvoniprosto.com.ua. -->
+          </div>
+          <!-- Default to the left -->
+          <strong
+            >Copyright &copy;
+            <span
+              class="flask-moment"
+              data-timestamp="2024-11-08T16:20:36Z"
+              data-function="format"
+              data-format="YYYY"
+              data-refresh="0"
+              style="display: none"
+              >2024-11-08T16:20:36Z</span
+            >
+            <a href="https://mceasy.com.ua">MCeasy</a></strong
+          >
+        </footer>
+        <!-- ./wrapper -->
+      </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+      integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js"
+      integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2"
+      crossorigin="anonymous"
+    ></script>
+    <script src="call.js"></script>
+  </body>
+</html>
