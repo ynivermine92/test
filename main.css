@@ -187,25 +187,13 @@ a.article-title:hover {
   display: flex;
   align-items: center;
 }
-
+.call__item{
+  cursor: pointer;
+}
 .call__item + .call__item {
-  animation: moveBottom 7s forwards;
-
+  bottom: 136px;
 }
 
-@keyframes moveBottom {
-  0% {
-    bottom: 0;
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.5;
-  }
-  100% {
-    bottom: 150px;
-    opacity: 0.3;
-  }
-}
 
 
 

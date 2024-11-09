@@ -30,20 +30,20 @@ function showToast(number, response, status) {
     const callMessages = document.querySelectorAll('.callMessage');
     const callNumberTexts = document.querySelectorAll('.callNumberText');
 
-    // Проверка на существование элементов, иначе выводим сообщение об ошибке
+ 
     if (!callToastItems.length || !callNumberTexts.length || !callMessages.length) {
         console.error('One or more elements are missing.');
         return;
     }
 
-    // Обновление текста с номером телефона
+ 
     callNumberTexts.forEach((callNumberText) => {
         if (callNumberText.innerHTML.trim() === '') {
             callNumberText.innerHTML = 'Номер неизвестен';
         }
     });
 
-    // Обновление сообщения
+  
     callMessages.forEach((callMessage) => {
         if (callMessage.innerHTML.trim() === '') {
             callMessage.innerHTML = 'Сообщение отсутствует';
@@ -51,42 +51,61 @@ function showToast(number, response, status) {
     });
 
     // Устанавливаем стиль и иконку в зависимости от статуса
-    callToastItems.forEach((item) => {
+    callToastItems.forEach((item, index) => {
         const callIcon = item.querySelector('.callIcon i');
-
+    
+     
         if (!callIcon) {
             console.error('Icon element is missing in one of the items.');
             return;
         }
+    
 
         if (status !== 200) {
             item.style.backgroundColor = 'lightcoral';
+    
+           
+            if (index > 1) {
+                item.style.bottom = `${130 * index}px`;
+            }
+    
+            // Меняем иконку
             callIcon.innerHTML = 'hide_source';
+    
+ 
+            const reverseIndex = callToastItems.length - 1 - index;
+            
+
+            setTimeout(() => {
+                item.style.transition = 'opacity 1s';  
+                item.style.opacity = '0.5';           
+                
+
+                setTimeout(() => {
+                    item.style.display = 'none';
+                }, 1000);  
+            }, 5000 + 4000 * reverseIndex); 
         } else {
+            // Сброс стилей при статусе 200
             item.style.backgroundColor = '';
             callIcon.innerHTML = 'phone_in_talk';
         }
     });
+    
+    
+    
 
-    // Устанавливаем размер шрифта для сообщения
+
+    
     callMessages.forEach((callMessage) => {
         callMessage.style.fontSize = '0.9em';
     });
 
-    setTimeout(() => {
-        if (callToastItems.length > 0) {
-      
-                const updatedCallToastItems = document.querySelectorAll('.call__item');
-                const lastItem = updatedCallToastItems[updatedCallToastItems.length - 1];
-                if(lastItem) {
-                    lastItem.remove();
-                }
-        }
-    }, 5000);
+ 
 
 }
 
-// Вызов функции с произвольными данными
+
 showToast();
 
 
